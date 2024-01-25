@@ -2,6 +2,7 @@ package esercizio_w3_g2.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "evento")
@@ -18,12 +19,24 @@ public class Evento {
     @Column(name = "numero_partecipanti", nullable = false)
     private int NumeroPartecipanti;
 
+    @ManyToOne
+    @JoinColumn(name = "location_fk")
+    private Location location;
+
+    @OneToMany(mappedBy = "evento")
+    private List<Partecipazione> partecipazioni;
+
     public Evento() {
+    }
+
+    public Evento(int id, String titolo, LocalDate dataEvento, esercizio_w3_g2.entities.tipoEvento tipoEvento, int numeroPartecipanti, Location location, List<Partecipazione> partecipazioni ) {
         this.id = id;
         this.titolo = titolo;
         this.dataEvento = dataEvento;
         this.tipoEvento = tipoEvento;
-        this.NumeroPartecipanti = NumeroPartecipanti;
+        NumeroPartecipanti = numeroPartecipanti;
+        this.location = location;
+        this.partecipazioni = partecipazioni;
     }
 
     public int getId() {
@@ -66,6 +79,14 @@ public class Evento {
         NumeroPartecipanti = numeroPartecipanti;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     @Override
     public String toString() {
         return "Evento{" +
@@ -74,6 +95,10 @@ public class Evento {
                 ", dataEvento=" + dataEvento +
                 ", tipoEvento=" + tipoEvento +
                 ", NumeroPartecipanti=" + NumeroPartecipanti +
+                ", location=" + location +
+                ", partecipazioni=" + partecipazioni +
                 '}';
     }
+
+
 }

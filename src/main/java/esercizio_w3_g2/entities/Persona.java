@@ -1,25 +1,39 @@
 package esercizio_w3_g2.entities;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table(name = "persona")
 public class Persona {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String nome;
     private String cognome;
     private String email;
-    private LocalDate dataDiNascita;
+    @Column(name = "data_nascita")
+    private LocalDate dataNascita;
+    @Enumerated(EnumType.STRING)
     private Sesso sesso;
-    private ArrayList<Partecipazione> listaPartecipazioni;
+    @OneToMany(mappedBy = "persona")
+    @OrderBy("")
+    private List<Partecipazione> partecipazioni;
 
-    public Persona(int id, String nome, String cognome, String email, LocalDate dataDiNascita, Sesso sesso, ArrayList<Partecipazione> listaPartecipazioni) {
+
+    public Persona() {
+    }
+
+    public Persona(int id, String nome, String cognome, String email, LocalDate dataNascita, Sesso sesso, List<Partecipazione> partecipazioni) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
-        this.dataDiNascita = dataDiNascita;
+        this.dataNascita = dataNascita;
         this.sesso = sesso;
-        this.listaPartecipazioni = listaPartecipazioni;
+        this.partecipazioni = partecipazioni;
     }
 
     public int getId() {
@@ -54,12 +68,12 @@ public class Persona {
         this.email = email;
     }
 
-    public LocalDate getDataDiNascita() {
-        return dataDiNascita;
+    public LocalDate getDataNascita() {
+        return dataNascita;
     }
 
-    public void setDataDiNascita(LocalDate dataDiNascita) {
-        this.dataDiNascita = dataDiNascita;
+    public void setDataDiNascita(LocalDate dataNascita) {
+        this.dataNascita = dataNascita;
     }
 
     public Sesso getSesso() {
@@ -70,11 +84,24 @@ public class Persona {
         this.sesso = sesso;
     }
 
-    public ArrayList<Partecipazione> getListaPartecipazioni() {
-        return listaPartecipazioni;
+    public List<Partecipazione> getListaPartecipazioni() {
+        return partecipazioni;
     }
 
-    public void setListaPartecipazioni(ArrayList<Partecipazione> listaPartecipazioni) {
-        this.listaPartecipazioni = listaPartecipazioni;
+    public void setListaPartecipazioni(List<Partecipazione> listaPartecipazioni) {
+        this.partecipazioni = listaPartecipazioni;
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", email='" + email + '\'' +
+                ", dataNascita=" + dataNascita +
+                ", sesso=" + sesso +
+                ", partecipazioni=" + partecipazioni +
+                '}';
     }
 }

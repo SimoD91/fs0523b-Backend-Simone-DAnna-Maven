@@ -1,13 +1,27 @@
 package esercizio_w3_g2.entities;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "partecipazione")
 public class Partecipazione {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @ManyToOne
+    @JoinColumn(name = "persona_fk")
     private Persona persona;
+    @ManyToOne
+    @JoinColumn(name = "evento_fk")
     private Evento evento;
-    private String stato;
+    @Enumerated(EnumType.STRING)
+    private Stato stato;
 
-    public Partecipazione(int id, Persona persona, Evento evento, String stato) {
+    public Partecipazione() {
+    }
+
+    public Partecipazione(int id, Persona persona, Evento evento, Stato stato) {
         this.id = id;
         this.persona = persona;
         this.evento = evento;
@@ -38,11 +52,21 @@ public class Partecipazione {
         this.evento = evento;
     }
 
-    public String getStato() {
+    public Stato getStato() {
         return stato;
     }
 
-    public void setStato(String stato) {
+    public void setStato(Stato stato) {
         this.stato = stato;
+    }
+
+    @Override
+    public String toString() {
+        return "Partecipazione{" +
+                "id=" + id +
+                ", persona=" + persona +
+                ", evento=" + evento +
+                ", stato=" + stato +
+                '}';
     }
 }
